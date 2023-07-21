@@ -1,4 +1,4 @@
-
+    #Menu Inicial
 menu_ini = """
     OPERAÇÕES:
 
@@ -7,7 +7,7 @@ menu_ini = """
 [3] Sair
 
 => """
-
+    #Menu Cliente
 menu_cliente = """
     OPERAÇÕES:
 
@@ -16,7 +16,7 @@ menu_cliente = """
 [3] Sair
 
 => """
-
+    #Menu Operações
 menu_op = """
     OPERAÇÕES:
 
@@ -27,6 +27,7 @@ menu_op = """
 
 => """
 
+    #Declaração de Variáveis
 saldo = 0
 lim_saque = 3
 val_max_saque = 500
@@ -34,16 +35,20 @@ extrato = ""
 num_saque = 0
 clientes = []
 cliente = {}
+cpf_dup = ""
 
+    #Função Cadastro Cliente
 def cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado):
-    cliente = {'nome: 'f'{nome_c}', 'data_nascimento: 'f'{data_n}', 'cpf: 'f'{cpf_c}', 'endereco: 'f'{logradouro}, {nro} - {bairro} - {cidade}/{sig_estado}'}
+    cliente = {"nome": nome_c, "data_nascimento":data_n, "cpf": cpf_c, "endereco": f"{logradouro}, {nro} - {bairro} - {cidade}/{sig_estado}"}
     global clientes
     clientes.append(cliente)
     return 
 
+    #Função Cadastro Conta Bancaria
 def cad_conta_bancaria():
     return
 
+    #Função Depositar
 def depositar(valord, sal, ext):
     if valord > 0:
         sal += valord
@@ -55,6 +60,7 @@ def depositar(valord, sal, ext):
     else:
         return "***Operação falhou! O valor informado é inválido.***"
 
+    #Função Sacar
 def sacar(valors, sal, ext):    
 
     if valors > 0:
@@ -77,7 +83,7 @@ def sacar(valors, sal, ext):
     else:
             return "***Operação falhou! O valor informado é inválido.***"
                         
-
+    #Função Extrado
 def f_extrato(ext):
             global extrato
             extrato = ext
@@ -91,22 +97,39 @@ def f_extrato(ext):
 
 Saldo Atual: R$ {saldo:.2f}
 ============================="""
+
+    # MENU INICIAL
 while True:
      
-     opcao = input(menu_ini)
+    opcao = input(menu_ini)
 
-     if opcao == "1":
-          print("Por favor, informe seus Dados.\n")
-          nome_c = input("Nome: ") 
-          data_n = input("Data de nascimento: ")
-          cpf_c = input("CPF: ")
-          logradouro = input("Logradouro: ")
-          nro = input("Número: ")
-          bairro = input("Bairro: ")
-          cidade = input("Cidade: ")
-          sig_estado = input("Sigla do Estado: ")
-          cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
-          print(clientes)
+    # OPÇÃO CADASTRAR
+    if opcao == "1":
+        print("Por favor, informe seus Dados.\n")
+        nome_c = input("Nome: ") 
+        data_n = input("Data de nascimento: ")
+        cpf_c = input("CPF: ")
+        for i in range(0, len(clientes)):
+            if clientes[i]['cpf'] == cpf_c:
+                cpf_dup ="Este CPF já está cadastrado."
+                print(cpf_dup)
+                
+        if cpf_dup == "Este CPF já está cadastrado.":
+            break
+
+        logradouro = input("Logradouro: ")
+        nro = input("Número: ")
+        bairro = input("Bairro: ")
+        cidade = input("Cidade: ")
+        sig_estado = input("Sigla do Estado: ")
+        cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
+        print(clientes)
+
+    # OPÇÃO SAIR
+    elif opcao == "3":
+         break
+    
+    
 
 
 """while True:
