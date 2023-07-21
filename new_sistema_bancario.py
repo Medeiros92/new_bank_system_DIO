@@ -1,5 +1,23 @@
 
-menu = """
+menu_ini = """
+    OPERAÇÕES:
+
+[1] Cadastrar
+[2] Tenho Conta
+[3] Sair
+
+=> """
+
+menu_cliente = """
+    OPERAÇÕES:
+
+[1] Abrir uma nova conta
+[2] Operações
+[3] Sair
+
+=> """
+
+menu_op = """
     OPERAÇÕES:
 
 [d] Depositar
@@ -14,9 +32,14 @@ lim_saque = 3
 val_max_saque = 500
 extrato = ""
 num_saque = 0
+clientes = []
+cliente = {}
 
-def cad_usuario():
-    return
+def cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado):
+    cliente = {'nome: 'f'{nome_c}', 'data_nascimento: 'f'{data_n}', 'cpf: 'f'{cpf_c}', 'endereco: 'f'{logradouro}, {nro} - {bairro} - {cidade}/{sig_estado}'}
+    global clientes
+    clientes.append(cliente)
+    return 
 
 def cad_conta_bancaria():
     return
@@ -68,10 +91,27 @@ def f_extrato(ext):
 
 Saldo Atual: R$ {saldo:.2f}
 ============================="""
-
 while True:
+     
+     opcao = input(menu_ini)
+
+     if opcao == "1":
+          print("Por favor, informe seus Dados.\n")
+          nome_c = input("Nome: ") 
+          data_n = input("Data de nascimento: ")
+          cpf_c = input("CPF: ")
+          logradouro = input("Logradouro: ")
+          nro = input("Número: ")
+          bairro = input("Bairro: ")
+          cidade = input("Cidade: ")
+          sig_estado = input("Sigla do Estado: ")
+          cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
+          print(clientes)
+
+
+"""while True:
     
-    opcao = input(menu)
+    opcao = input(menu_op)
     
     if opcao == "d":
         valor = float(input("Informe o valor a ser depositado: "))
@@ -95,4 +135,4 @@ while True:
         break
         
     else:
-        print("***Opção Inválida.***")
+        print("***Opção Inválida.***")"""
