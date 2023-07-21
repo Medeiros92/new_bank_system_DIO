@@ -75,7 +75,7 @@ while True:
     
     if opcao == "d":
         valor = float(input("Informe o valor a ser depositado: "))
-        print(depositar(valor, sal=saldo, ext=extrato))
+        print(depositar(valor, saldo, extrato))
             
     elif opcao == "s":
         
