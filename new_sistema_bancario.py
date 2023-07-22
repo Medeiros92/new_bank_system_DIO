@@ -149,6 +149,8 @@ while True:
         cpf = input("Digite seu CPF: ")
         cpf_e = lista_cpf(cpf)
         print()
+
+            #Se o cpf estiver cadastrado a lista ele quebrará a repetição do menu inicial e entrará no menu cliente.
         if cpf_e == "Este CPF já está cadastrado.":
             menu_cliente()
             break
@@ -163,7 +165,8 @@ while True:
       
     else:
         print("***Opção Inválida.***")
-
+        
+    #MENU CLIENTE
 while True:
      opcao = input(menu_cliente())
 
