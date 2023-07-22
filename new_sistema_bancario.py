@@ -1,5 +1,6 @@
     #Menu Inicial
-menu_ini = """
+def menu_ini(): 
+     return """
     OPERAÇÕES:
 
 [1] Cadastrar
@@ -7,6 +8,16 @@ menu_ini = """
 [3] Sair
 
 => """
+
+#Menu Opção
+menu_opc = """
+    OPERAÇÕES:
+
+[1] Voltar
+[2] Sair
+
+=> """
+
     #Menu Cliente
 menu_cliente = """
     OPERAÇÕES:
@@ -101,7 +112,7 @@ Saldo Atual: R$ {saldo:.2f}
     # MENU INICIAL
 while True:
      
-    opcao = input(menu_ini)
+    opcao = input(menu_ini())
 
     # OPÇÃO CADASTRAR
     if opcao == "1":
@@ -112,18 +123,27 @@ while True:
         for i in range(0, len(clientes)):
             if clientes[i]['cpf'] == cpf_c:
                 cpf_dup ="Este CPF já está cadastrado."
+                print()
                 print(cpf_dup)
+        if cpf_dup != "Este CPF já está cadastrado.":
                 
-        if cpf_dup == "Este CPF já está cadastrado.":
-            break
+            #print("Gostaria de voltar ao Menu anterior?")
+            #op = (input(menu_opc))
+            #if op == "1":
+                # menu_ini()
+           # else: 
+            logradouro = input("Logradouro: ")
+            nro = input("Número: ")
+            bairro = input("Bairro: ")
+            cidade = input("Cidade: ")
+            sig_estado = input("Sigla do Estado: ")
+            cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
+            print(clientes)
+            
+        else:
+             cpf_dup = ""
+             continue
 
-        logradouro = input("Logradouro: ")
-        nro = input("Número: ")
-        bairro = input("Bairro: ")
-        cidade = input("Cidade: ")
-        sig_estado = input("Sigla do Estado: ")
-        cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
-        print(clientes)
 
     # OPÇÃO SAIR
     elif opcao == "3":
