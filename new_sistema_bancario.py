@@ -9,17 +9,9 @@ def menu_ini():
 
 => """
 
-#Menu Opção
-menu_opc = """
-    OPERAÇÕES:
-
-[1] Voltar
-[2] Sair
-
-=> """
-
     #Menu Cliente
-menu_cliente = """
+def menu_cliente():
+    return """
     OPERAÇÕES:
 
 [1] Abrir uma nova conta
@@ -28,12 +20,14 @@ menu_cliente = """
 
 => """
     #Menu Operações
-menu_op = """
+def menu_op():
+    return """
     OPERAÇÕES:
 
 [d] Depositar
 [s] Sacar
 [e] Extrato
+[v] Voltar Menu Inicial
 [q] Sair
 
 => """
@@ -47,6 +41,16 @@ num_saque = 0
 clientes = []
 cliente = {}
 cpf_dup = ""
+
+    #Função Lista CPF
+def lista_cpf(cpf):
+     
+        #Pecorre toda a Lista Clientes
+     for i in range(0, len(clientes)):
+
+            #Verifica se já existe o cpf cadastrado no Dicionário
+            if clientes[i]['cpf'] == cpf:
+                return "Este CPF já está cadastrado."
 
     #Função Cadastro Cliente
 def cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado):
@@ -120,15 +124,9 @@ while True:
         nome_c = input("Nome: ") 
         data_n = input("Data de nascimento: ")
         cpf_c = input("CPF: ")
-        
-        #Pecorre toda a Lista Clientes
-        for i in range(0, len(clientes)):
 
-            #Verifica se já existe o cpf cadastrado no Dicionário
-            if clientes[i]['cpf'] == cpf_c:
-                cpf_dup ="Este CPF já está cadastrado."
-                print()
-                print(cpf_dup)
+        #Chama função lista_cpf passando a variavel cpf_c como parametro
+        cpf_dup = lista_cpf(cpf_c)
 
                 #Se o valor da variável for diferente da String, continua o cadastro
         if cpf_dup != "Este CPF já está cadastrado.":
@@ -140,22 +138,40 @@ while True:
             cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
             print(clientes)
             
-            #Se não, ele Limpa o valor da variavel, imterrompe o cadastro e volta para o menu inicial.
+            #Se não, ele mostra o texto, Limpa o valor da variavel, imterrompe o cadastro e volta para o menu inicial.
         else:
+             print(f"\n{cpf_dup}\nCadastro Cancelado.\n")
              cpf_dup = ""
              continue
 
-
+    # OPÇÃO TENHO CONTA
+    elif opcao == "2":
+        cpf = input("Digite seu CPF: ")
+        cpf_e = lista_cpf(cpf)
+        print()
+        if cpf_e == "Este CPF já está cadastrado.":
+            menu_cliente()
+            break
+        
+        else:
+             print()
+             print("Este CPF não está registrado em nosso sistema.")
+             print()
     # OPÇÃO SAIR
     elif opcao == "3":
          break
-    
-    
+      
+    else:
+        print("***Opção Inválida.***")
+
+while True:
+     opcao = input(menu_cliente())
+
 
 
 """while True:
     
-    opcao = input(menu_op)
+    opcao = input(menu_op())
     
     if opcao == "d":
         valor = float(input("Informe o valor a ser depositado: "))
@@ -174,6 +190,9 @@ while True:
             
     elif opcao =="e":
         print(f_extrato(ext=extrato))
+
+    elif opcao == "v":
+        menu_ini()   
              
     elif opcao == "q":
         break
