@@ -120,18 +120,18 @@ while True:
         nome_c = input("Nome: ") 
         data_n = input("Data de nascimento: ")
         cpf_c = input("CPF: ")
+        
+        #Pecorre toda a Lista Clientes
         for i in range(0, len(clientes)):
+
+            #Verifica se já existe o cpf cadastrado no Dicionário
             if clientes[i]['cpf'] == cpf_c:
                 cpf_dup ="Este CPF já está cadastrado."
                 print()
                 print(cpf_dup)
+
+                #Se o valor da variável for diferente da String, continua o cadastro
         if cpf_dup != "Este CPF já está cadastrado.":
-                
-            #print("Gostaria de voltar ao Menu anterior?")
-            #op = (input(menu_opc))
-            #if op == "1":
-                # menu_ini()
-           # else: 
             logradouro = input("Logradouro: ")
             nro = input("Número: ")
             bairro = input("Bairro: ")
@@ -140,6 +140,7 @@ while True:
             cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
             print(clientes)
             
+            #Se não, ele Limpa o valor da variavel, imterrompe o cadastro e volta para o menu inicial.
         else:
              cpf_dup = ""
              continue
