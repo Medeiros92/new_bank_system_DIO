@@ -1,4 +1,4 @@
-    #Menu Inicial
+    #MENU INICIAL
 def menu_ini(): 
      return """
     OPERAÇÕES:
@@ -9,7 +9,7 @@ def menu_ini():
 
 => """
 
-    #Menu Cliente
+    #MENU CLIENTE
 def menu_cliente():
     return """
     OPERAÇÕES:
@@ -19,7 +19,7 @@ def menu_cliente():
 [3] Sair
 
 => """
-    #Menu Operações
+    #MENU OPERAÇÕES
 def menu_op():
     return """
     OPERAÇÕES:
@@ -32,17 +32,21 @@ def menu_op():
 
 => """
 
-    #Declaração de Variáveis
+    #DECLARAÇÃO DE VARIÁVEIS
 saldo = 0
 lim_saque = 3
 val_max_saque = 500
 extrato = ""
 num_saque = 0
+num_conta = 0
 clientes = []
 cliente = {}
 cpf_dup = ""
+conta_bancaria = []
+conta = []
 
-    #Função Lista CPF
+
+    #Função LISTA CPF
 def lista_cpf(cpf):
      
         #Pecorre toda a Lista Clientes
@@ -52,18 +56,31 @@ def lista_cpf(cpf):
             if clientes[i]['cpf'] == cpf:
                 return "Este CPF já está cadastrado."
 
-    #Função Cadastro Cliente
+    #FUNÇÃO LISTA NOME POR CPF
+def lista_n_cpf(cpf):
+    for i in range(0, len(clientes)):
+        if clientes[i]['cpf'] == cpf:
+            return clientes[i]['nome']
+        
+    #FUNÇÃO CADASTRO CLIENTE
 def cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado):
     cliente = {"nome": nome_c, "data_nascimento":data_n, "cpf": cpf_c, "endereco": f"{logradouro}, {nro} - {bairro} - {cidade}/{sig_estado}"}
     global clientes
     clientes.append(cliente)
     return 
 
-    #Função Cadastro Conta Bancaria
-def cad_conta_bancaria():
+    #FUNÇÃO CADASTRO CONTA BANCÁRIA
+def cad_conta_bancaria(nome):
+    num_agencia = "0001"
+    global num_conta
+    num_conta += 1
+    conta = [num_agencia, num_conta, nome]
+    global conta_bancaria
+    conta_bancaria.append(conta)
+
     return
 
-    #Função Depositar
+    #FUNÇÃO DEPOSITAR
 def depositar(valord, sal, ext):
     if valord > 0:
         sal += valord
@@ -75,7 +92,7 @@ def depositar(valord, sal, ext):
     else:
         return "***Operação falhou! O valor informado é inválido.***"
 
-    #Função Sacar
+    #FUNÇÃO SACAR
 def sacar(valors, sal, ext):    
 
     if valors > 0:
@@ -98,7 +115,7 @@ def sacar(valors, sal, ext):
     else:
             return "***Operação falhou! O valor informado é inválido.***"
                         
-    #Função Extrado
+    #FUNÇÃO EXTRATO
 def f_extrato(ext):
             global extrato
             extrato = ext
@@ -135,8 +152,10 @@ while True:
             bairro = input("Bairro: ")
             cidade = input("Cidade: ")
             sig_estado = input("Sigla do Estado: ")
+            cad_conta_bancaria(nome_c)
             cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
             print(clientes)
+            print(conta_bancaria)
             
             #Se não, ele mostra o texto, Limpa o valor da variavel, imterrompe o cadastro e volta para o menu inicial.
         else:
@@ -146,8 +165,8 @@ while True:
 
     # OPÇÃO TENHO CONTA
     elif opcao == "2":
-        cpf = input("Digite seu CPF: ")
-        cpf_e = lista_cpf(cpf)
+        cpf_t = input("Digite seu CPF: ")
+        cpf_e = lista_cpf(cpf_t)
         print()
 
             #Se o cpf estiver cadastrado a lista ele quebrará a repetição do menu inicial e entrará no menu cliente.
@@ -165,10 +184,36 @@ while True:
       
     else:
         print("***Opção Inválida.***")
+
         
     #MENU CLIENTE
 while True:
-     opcao = input(menu_cliente())
+    opcao = input(menu_cliente())
+
+        #OPÇÃO ABRIR NOVA CONTA
+    if opcao == "1":
+
+            #Chama a função lista nome por cpf 
+            #Passando o parametro cpf digitado na opção Tenho Conta do Menu inicial
+            #Variavel nome_e recebe o resultado
+        nome_e = lista_n_cpf(cpf_t)
+
+            #Chama a função cad_conta_bancaria passando a variavel nome_e como parametro.
+        cad_conta_bancaria(nome_e)
+        print(conta_bancaria)
+
+        #OPÇÃO OPERAÇÕES
+    elif opcao == "2":
+        menu_op()
+        break
+
+        #OPÇÃO SAIR
+    elif opcao == "3":
+         break
+    
+    else:
+        print("***Opção Inválida.***")
+         
 
 
 
