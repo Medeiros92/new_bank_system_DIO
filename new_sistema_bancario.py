@@ -17,8 +17,7 @@ def menu_cliente():
 
 [1] Abrir uma nova conta
 [2] Operações
-[3] Voltar Menu Inicial
-[4] Sair
+[3] Sair
 
 => """
     #MENU OPERAÇÕES
@@ -26,11 +25,10 @@ def menu_op():
     return """
     OPERAÇÕES:
 
-[d] Depositar
-[s] Sacar
-[e] Extrato
-[v] Voltar Menu Inicial
-[q] Sair
+[1] Depositar
+[2] Sacar
+[3] Extrato
+[4] Sair
 
 => """
 
@@ -158,8 +156,6 @@ while True:
             sig_estado = input("Sigla do Estado: ")
             cad_conta_bancaria(nome_c)
             cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado)
-            print(clientes)
-            print(conta_bancaria)
             
             #Se não, ele mostra o texto, Limpa o valor da variavel, imterrompe o cadastro e volta para o menu inicial.
         else:
@@ -190,7 +186,7 @@ while True:
 
                         #Chama a função cad_conta_bancaria passando a variavel nome_e como parametro.
                     cad_conta_bancaria(nome_e)
-                    print(conta_bancaria)
+                    
 
                     #OPÇÃO OPERAÇÕES
                 elif opcao == "2":
@@ -200,11 +196,11 @@ while True:
                         
                         opcao = input(menu_op())
                         
-                        if opcao == "d":
+                        if opcao == "1":
                             valor = float(input("Informe o valor a ser depositado: "))
                             print(depositar(valor, saldo, extrato))
                                 
-                        elif opcao == "s":
+                        elif opcao == "2":
                             
                             if lim_saque > num_saque:
                                 lim_saque -=1
@@ -215,26 +211,18 @@ while True:
                             else:
                                 print("***Operação falhou! Você atingiu o número maximo de saques diários.***")
                                 
-                        elif opcao =="e":
-                            print(f_extrato(ext=extrato))
-
-                        elif opcao == "v":
-                            menu_ini()   
+                        elif opcao =="3":
+                            print(f_extrato(ext=extrato))  
                                 
-                        elif opcao == "q":
+                        elif opcao == "4":
                             break
                             
                         else:
                             print("***Opção Inválida.***")
                     break
 
-                    #OPÇÃO VOLTAR MENU INICIAL
-                elif opcao == "3":
-                    menu_ini()
-                    break
-
                     #OPÇÃO SAIR
-                elif opcao == "4":
+                elif opcao == "3":
                     break
                 
                 else:
