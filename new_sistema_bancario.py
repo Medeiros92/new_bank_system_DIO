@@ -5,7 +5,8 @@ def menu_ini():
 
 [1] Cadastrar
 [2] Tenho Conta
-[3] Sair
+[3] Listar Clientes
+[4] Sair
 
 => """
 
@@ -16,7 +17,8 @@ def menu_cliente():
 
 [1] Abrir uma nova conta
 [2] Operações
-[3] Sair
+[3] Voltar Menu Inicial
+[4] Sair
 
 => """
     #MENU OPERAÇÕES
@@ -44,6 +46,7 @@ cliente = {}
 cpf_dup = ""
 conta_bancaria = []
 conta = []
+borda = "*" * 133
 
 
     #Função LISTA CPF
@@ -61,6 +64,7 @@ def lista_n_cpf(cpf):
     for i in range(0, len(clientes)):
         if clientes[i]['cpf'] == cpf:
             return clientes[i]['nome']
+        
         
     #FUNÇÃO CADASTRO CLIENTE
 def cad_cliente(nome_c, data_n, cpf_c, logradouro, nro, bairro, cidade, sig_estado):
@@ -93,7 +97,7 @@ def depositar(valord, sal, ext):
         return "***Operação falhou! O valor informado é inválido.***"
 
     #FUNÇÃO SACAR
-def sacar(valors, sal, ext):    
+def sacar(* valors, sal, ext, ):    
 
     if valors > 0:
         
@@ -171,79 +175,109 @@ while True:
 
             #Se o cpf estiver cadastrado a lista ele quebrará a repetição do menu inicial e entrará no menu cliente.
         if cpf_e == "Este CPF já está cadastrado.":
-            menu_cliente()
-            break
+
+                #MENU CLIENTE
+            while True:
+                opcao = input(menu_cliente())
+
+                    #OPÇÃO ABRIR NOVA CONTA
+                if opcao == "1":
+
+                        #Chama a função lista nome por cpf 
+                        #Passando o parametro cpf digitado na opção Tenho Conta do Menu inicial
+                        #Variavel nome_e recebe o resultado
+                    nome_e = lista_n_cpf(cpf_t)
+
+                        #Chama a função cad_conta_bancaria passando a variavel nome_e como parametro.
+                    cad_conta_bancaria(nome_e)
+                    print(conta_bancaria)
+
+                    #OPÇÃO OPERAÇÕES
+                elif opcao == "2":
+
+                    #MENU OPERAÇÕES
+                    while True:
+                        
+                        opcao = input(menu_op())
+                        
+                        if opcao == "d":
+                            valor = float(input("Informe o valor a ser depositado: "))
+                            print(depositar(valor, saldo, extrato))
+                                
+                        elif opcao == "s":
+                            
+                            if lim_saque > num_saque:
+                                lim_saque -=1
+                                valor = float(input("Informe o valor do saque: "))
+                                
+                                print(sacar(valor=valor, sal=saldo, ext=extrato))
+                                    
+                            else:
+                                print("***Operação falhou! Você atingiu o número maximo de saques diários.***")
+                                
+                        elif opcao =="e":
+                            print(f_extrato(ext=extrato))
+
+                        elif opcao == "v":
+                            menu_ini()   
+                                
+                        elif opcao == "q":
+                            break
+                            
+                        else:
+                            print("***Opção Inválida.***")
+                    break
+
+                    #OPÇÃO VOLTAR MENU INICIAL
+                elif opcao == "3":
+                    menu_ini()
+                    break
+
+                    #OPÇÃO SAIR
+                elif opcao == "4":
+                    break
+                
+                else:
+                    print("***Opção Inválida.***")
+                    break
         
         else:
              print()
              print("Este CPF não está registrado em nosso sistema.")
              print()
-    # OPÇÃO SAIR
+
+    # OPÇÃO LISTAR CLIENTES
     elif opcao == "3":
-         break
+        for i in range(0, len(clientes)):
+            nome = clientes[i]['nome']
+            d_nascimento = clientes[i]['data_nascimento']
+            cpf = clientes[i]['cpf']
+            endereco = clientes[i]['endereco']
+            print(f"   CLIENTES CADASTRADOS\n{borda}")
+            print(f"Cliente {i}\n")
+            print(f"Nome: {nome}\nDATA DE NASCIMENTO: {d_nascimento}\nCPF: {cpf}\nENDEREÇO: {endereco}")
+            print(f"{borda}")
+        for i in range(0, len(conta_bancaria)):
+            agencia = conta_bancaria[i][0]
+            conta = conta_bancaria[i][1]
+            nome = conta_bancaria[i][2]
+            print(f"   CONTAS BANCÁRIAS CADASTRADAS\n{borda}")
+            print(f"Conta {i}\n")
+            print(f"AGÊNCIA: {agencia}\nCONTA: {conta}\nCLIENTE: {nome}")
+            print(f"{borda}")
+         
+              
+   # OPÇÃO SAIR
+    elif opcao == "4":
+        break 
       
     else:
         print("***Opção Inválida.***")
 
-        
-    #MENU CLIENTE
-while True:
-    opcao = input(menu_cliente())
 
-        #OPÇÃO ABRIR NOVA CONTA
-    if opcao == "1":
 
-            #Chama a função lista nome por cpf 
-            #Passando o parametro cpf digitado na opção Tenho Conta do Menu inicial
-            #Variavel nome_e recebe o resultado
-        nome_e = lista_n_cpf(cpf_t)
 
-            #Chama a função cad_conta_bancaria passando a variavel nome_e como parametro.
-        cad_conta_bancaria(nome_e)
-        print(conta_bancaria)
-
-        #OPÇÃO OPERAÇÕES
-    elif opcao == "2":
-        menu_op()
-        break
-
-        #OPÇÃO SAIR
-    elif opcao == "3":
-         break
-    
-    else:
-        print("***Opção Inválida.***")
          
 
 
 
-"""while True:
-    
-    opcao = input(menu_op())
-    
-    if opcao == "d":
-        valor = float(input("Informe o valor a ser depositado: "))
-        print(depositar(valor, saldo, extrato))
-            
-    elif opcao == "s":
-        
-        if lim_saque > num_saque:
-            lim_saque -=1
-            valor = float(input("Informe o valor do saque: "))
-            
-            print(sacar(valor, sal=saldo, ext=extrato))
-                
-        else:
-            print("***Operação falhou! Você atingiu o número maximo de saques diários.***")
-            
-    elif opcao =="e":
-        print(f_extrato(ext=extrato))
-
-    elif opcao == "v":
-        menu_ini()   
-             
-    elif opcao == "q":
-        break
-        
-    else:
-        print("***Opção Inválida.***")"""
